@@ -43,7 +43,7 @@ from ui_parts import hero_html, result_html, result_height, care_html, care_heig
 
 API_URL = "http://127.0.0.1:8000/triage"
 
-st.set_page_config(page_title="صحت ساتھی SehatSathi", page_icon="🩺", layout="centered")
+st.set_page_config(page_title="صحت ساتھی SehatSathi", page_icon="🩺", layout="wide", initial_sidebar_state="expanded")
 
 # ---------------------------------------------------------------- text in both languages
 TR = {
@@ -173,27 +173,124 @@ DIR, ALIGN = ("rtl", "right") if RTL else ("ltr", "left")
 # ---------------------------------------------------------------- page style
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&display=swap');
-html, body, [class*="css"], .stApp, textarea, input, button, label, p, h1, h2, h3, li {
-    font-family: 'Noto Naskh Arabic', 'Jameel Noori Nastaleeq', 'Segoe UI', Tahoma, serif !important;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --brand: #0f9f98;
+    --brand-dark: #087e78;
+    --blue: #2563eb;
+    --ink: #172b3a;
+    --muted: #64748b;
+    --surface: #ffffff;
+    --line: #e2e8f0;
 }
-.stApp { direction: __DIR__; text-align: __ALIGN__;
-         background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 40%); }
-header[data-testid="stHeader"] { background: transparent; }
-textarea, input { direction: __DIR__; text-align: __ALIGN__; font-size: 1.15rem !important; border-radius: 14px !important; }
-label, .stMarkdown, p { text-align: __ALIGN__; }
-div.stButton > button[kind="primary"] {
-    width: 100%; font-size: 1.3rem; padding: .6rem 1rem; border-radius: 16px; border: none;
-    background: linear-gradient(135deg, #0ea5a4, #2563eb); color: #fff; font-weight: 700;
-    box-shadow: 0 6px 18px #2563eb44; transition: transform .15s;
+html, body, [class*="css"], .stApp, textarea, input, button, label, p, h1, h2, h3, h4, li {
+    font-family: 'Noto Naskh Arabic', 'Jameel Noori Nastaleeq', 'Segoe UI', Tahoma, sans-serif !important;
 }
-div.stButton > button[kind="primary"]:hover { transform: translateY(-2px) scale(1.01); }
-.hint { color:#6b7280; font-size:.95rem; margin:-.3rem 0 .6rem 0; }
+.stApp {
+    direction: __DIR__;
+    text-align: __ALIGN__;
+    background:
+      radial-gradient(circle at 8% 3%, rgba(20,184,166,.10), transparent 25rem),
+      linear-gradient(180deg, #f5fbfc 0%, #f8fafc 45%, #ffffff 100%);
+}
+header[data-testid="stHeader"] { background: rgba(248,250,252,.78); }
+[data-testid="stAppViewContainer"] > .main .block-container {
+    max-width: 1240px;
+    padding: 1.5rem clamp(1rem, 3vw, 2.5rem) 3rem;
+}
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #f0fdfa 0%, #f8fafc 100%);
+    border-right: 1px solid #dcefeb;
+}
+[data-testid="stSidebar"] > div { padding-top: 1.4rem; }
+h1, h2, h3 { color: var(--ink); letter-spacing: -.02em; }
+h2 { font-weight: 800 !important; }
+.stMarkdown, p, label { color: var(--ink); text-align: __ALIGN__; }
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    border: 1px solid rgba(148,163,184,.22);
+    border-radius: 20px;
+    background: rgba(255,255,255,.86);
+    box-shadow: 0 8px 28px rgba(15, 23, 42, .045);
+}
+textarea, input, [data-baseweb="select"] > div {
+    direction: __DIR__;
+    text-align: __ALIGN__;
+    font-size: 1rem !important;
+    border-radius: 13px !important;
+}
+textarea:focus, input:focus { border-color: var(--brand) !important; }
+div.stButton > button, div.stDownloadButton > button, [data-testid="stFormSubmitButton"] button {
+    min-height: 46px;
+    border-radius: 13px;
+    font-weight: 700;
+    border: 1px solid #dbe7eb;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+div.stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] button {
+    width: 100%;
+    min-height: 52px;
+    font-size: 1.08rem;
+    border: 0;
+    color: white;
+    background: linear-gradient(115deg, #0f9f98, #2563eb);
+    box-shadow: 0 8px 20px rgba(37,99,235,.18);
+}
+div.stButton > button:hover, div.stDownloadButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(15,23,42,.10);
+    border-color: #99d5cf;
+}
+div.stButton > button[kind="primary"]:hover {
+    background: linear-gradient(115deg, #087e78, #1d4ed8);
+}
+[data-testid="stPills"] button, [data-testid="stMultiSelect"] span {
+    border-radius: 999px !important;
+}
+[data-testid="stAudioInput"] {
+    padding: .8rem;
+    border: 1px dashed #9ccdc8;
+    border-radius: 16px;
+    background: #f0fdfa;
+}
+[data-testid="stAlert"] { border-radius: 14px; }
+[data-testid="stExpander"] {
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: white;
+}
+[data-testid="stCaptionContainer"] p { color: var(--muted); }
+hr { border-color: #e5edf1; }
+.hint { color:#64748b; font-size:.95rem; margin:-.3rem 0 .6rem 0; }
+
+/* Responsive columns and controls */
+[data-testid="stHorizontalBlock"] { flex-wrap: wrap; gap: 1rem; }
+[data-testid="column"] { min-width: min(100%, 260px); }
+@media (max-width: 760px) {
+    [data-testid="stAppViewContainer"] > .main .block-container {
+        padding: .8rem .75rem 2rem;
+    }
+    [data-testid="stSidebar"] { min-width:  min(84vw, 320px); }
+    [data-testid="stHorizontalBlock"] { gap: .45rem; }
+    [data-testid="column"] { min-width: 100% !important; width: 100% !important; flex: 1 1 100% !important; }
+    h1 { font-size: 1.65rem !important; }
+    h2 { font-size: 1.35rem !important; }
+    h3 { font-size: 1.15rem !important; }
+    textarea { min-height: 105px; }
+    div.stButton > button, div.stDownloadButton > button { width: 100%; }
+    [data-testid="stPills"] { gap: .35rem; }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+    [data-testid="stAppViewContainer"] > .main .block-container { padding-left: 1.2rem; padding-right: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
 </style>
 """.replace("__DIR__", DIR).replace("__ALIGN__", ALIGN), unsafe_allow_html=True)
 
 # ---------------------------------------------------------------- hero banner
-render_html(hero_html(), 235)
+render_html(hero_html(), 255)
 
 # ---------------------------------------------------------------- input form
 col1, col2 = st.columns(2)
