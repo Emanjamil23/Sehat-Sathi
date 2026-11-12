@@ -14,40 +14,53 @@ SOFT = {"emergency": "#fdecea", "urgent": "#fff4e0", "home": "#e8f5e9"}
 
 # ------------------------------------------------------------------ hero banner
 def hero_html() -> str:
-    return f"""<!doctype html><html><head><meta charset='utf-8'>{FONT_LINK}
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <style>
-    {BASE_CSS}
-    body{{padding:5px}}
-    .hero{{position:relative;overflow:hidden;min-height:225px;border-radius:24px;padding:28px 34px;
-      display:flex;align-items:center;justify-content:space-between;gap:20px;color:white;
-      background:linear-gradient(120deg,#087e78 0%,#0ea5a4 48%,#2563eb 100%);
-      box-shadow:0 14px 32px #0f766e22}}
-    .hero:before,.hero:after{{content:'';position:absolute;border-radius:50%;background:#ffffff16}}
-    .hero:before{{width:260px;height:260px;right:-45px;top:-115px}}
-    .hero:after{{width:180px;height:180px;left:35%;bottom:-130px}}
-    .copy{{position:relative;z-index:1;max-width:650px}}
-    .eyebrow{{display:inline-flex;align-items:center;gap:8px;background:#ffffff20;border:1px solid #ffffff35;
-      border-radius:999px;padding:6px 13px;font-size:13px;font-weight:700;margin-bottom:12px}}
-    h1{{font-size:clamp(30px,4vw,48px);line-height:1.25;margin:0 0 7px;font-weight:800}}
-    .tag{{font-size:clamp(15px,2vw,20px);color:#e0f2fe;margin:0}}
-    .sub{{margin-top:18px;font-size:13px;color:#e0f2fe;opacity:.95}}
-    .symbol{{position:relative;z-index:1;flex:0 0 155px;width:155px;height:155px;border-radius:35px;
-      display:grid;place-items:center;background:#ffffff18;border:1px solid #ffffff35;
-      box-shadow:inset 0 1px 0 #ffffff35;font-size:82px}}
-    @media(max-width:600px){{.hero{{min-height:185px;padding:22px 19px;gap:8px;border-radius:18px}}
-      .symbol{{flex-basis:76px;width:76px;height:76px;border-radius:22px;font-size:40px}}
-      .sub{{margin-top:12px;font-size:11px}}.eyebrow{{font-size:11px;padding:5px 10px}}}}
-    </style></head><body>
-    <section class='hero'>
-      <div class='copy'>
-        <div class='eyebrow'>🩺 SEHATSATHI • HEALTH ASSISTANT</div>
-        <h1>صحت ساتھی</h1>
-        <p class='tag'>صحیح وقت پر صحیح فیصلہ</p>
-        <p class='sub'>اردو&nbsp; • &nbsp;رومن اردو&nbsp; • &nbsp;English</p>
-      </div>
-      <div class='symbol' aria-hidden='true'>✚</div>
-    </section></body></html>"""
+    svg = """
+<svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;border-radius:22px">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5a4"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="hill1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient>
+  </defs>
+  <rect width="900" height="250" fill="url(#sky)"/>
+  <circle cx="90" cy="60" r="34" fill="#fde68a"><animate attributeName="r" values="34;38;34" dur="4s" repeatCount="indefinite"/></circle>
+  <g fill="#fff" opacity=".85">
+    <ellipse cx="250" cy="48" rx="44" ry="14"><animateTransform attributeName="transform" type="translate" values="0 0;30 0;0 0" dur="14s" repeatCount="indefinite"/></ellipse>
+    <ellipse cx="285" cy="38" rx="28" ry="12"><animateTransform attributeName="transform" type="translate" values="0 0;30 0;0 0" dur="14s" repeatCount="indefinite"/></ellipse>
+    <ellipse cx="520" cy="30" rx="36" ry="11"><animateTransform attributeName="transform" type="translate" values="0 0;-26 0;0 0" dur="16s" repeatCount="indefinite"/></ellipse>
+  </g>
+  <path d="M0 190 Q150 130 320 180 T640 170 T900 175 V250 H0Z" fill="url(#hill1)"/>
+  <path d="M0 220 Q200 180 420 215 T900 205 V250 H0Z" fill="#047857"/>
+  <!-- village houses -->
+  <g>
+    <rect x="40" y="170" width="70" height="50" fill="#fef3c7"/><polygon points="32,172 75,135 118,172" fill="#b45309"/>
+    <rect x="62" y="190" width="18" height="30" fill="#92400e"/><rect x="88" y="185" width="14" height="14" fill="#60a5fa"/>
+    <rect x="150" y="178" width="60" height="42" fill="#fde68a"/><polygon points="143,180 180,148 217,180" fill="#dc2626"/>
+    <rect x="170" y="196" width="16" height="24" fill="#92400e"/>
+    <circle cx="250" cy="185" r="22" fill="#16a34a"/><rect x="247" y="195" width="6" height="26" fill="#78350f"/>
+    <circle cx="275" cy="195" r="16" fill="#22c55e"/><rect x="273" y="203" width="5" height="18" fill="#78350f"/>
+  </g>
+  <!-- health clinic with cross -->
+  <g>
+    <rect x="320" y="150" width="96" height="70" fill="#fff"/><polygon points="312,152 368,112 424,152" fill="#ef4444"/>
+    <rect x="352" y="188" width="32" height="32" fill="#bfdbfe"/>
+        <g transform="translate(368 150)"><rect x="-4" y="-16" width="8" height="32" rx="2" fill="#ef4444"/><rect x="-16" y="-4" width="32" height="8" rx="2" fill="#ef4444"/></g>
+  </g>
+  <!-- big heart + ECG -->
+  <g transform="translate(455 92) scale(.85)">
+    <path d="M0 40 C-60 -10 -30 -50 0 -20 C30 -50 60 -10 0 40Z" fill="#fff" opacity=".95">
+      <animateTransform attributeName="transform" type="scale" values="1;1.08;1" dur="1.2s" repeatCount="indefinite" additive="sum"/>
+    </path>
+    <path d="M-70 8 H-30 L-18 -18 L-2 34 L12 -8 L22 8 H70" fill="none" stroke="#ef4444" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+          stroke-dasharray="260" stroke-dashoffset="260"><animate attributeName="stroke-dashoffset" values="260;0;0;260" keyTimes="0;.5;.8;1" dur="2.4s" repeatCount="indefinite"/></path>
+  </g>
+  <!-- title -->
+  <text x="870" y="105" text-anchor="end" font-size="52" font-weight="700" fill="#fff" style="font-family:'Noto Naskh Arabic','Segoe UI',serif">صحت ساتھی</text>
+  <text x="870" y="150" text-anchor="end" font-size="21" fill="#e0f2fe" style="font-family:'Noto Naskh Arabic','Segoe UI',serif">صحیح وقت پر صحیح فیصلہ</text>
+  <g transform="translate(870 190)" text-anchor="end" font-size="15" fill="#fff" style="font-family:'Noto Naskh Arabic','Segoe UI',serif">
+    <rect x="-300" y="-20" width="300" height="32" rx="16" fill="#ffffff" opacity=".18"/>
+    <text x="-14" y="2">اردو  •  رومن اردو  •  English</text>
+  </g>
+</svg>"""
+    return f"<!doctype html><html><head><meta charset='utf-8'>{FONT_LINK}<style>{BASE_CSS}</style></head><body>{svg}</body></html>"
 
 # ------------------------------------------------------------------ level illustrations
 def _illustration(level: str) -> str:
@@ -108,8 +121,8 @@ LABELS = {
 }
 
 def result_height(d: dict) -> int:
-    return (700 + (70 if d.get("red_flags_found") else 0) + 28 * max(0, len(d["steps"]) - 3)
-            + (150 if d.get("reasoning") else 0))
+    return (760 + (90 if d.get("red_flags_found") else 0) + 34 * max(0, len(d["steps"]) - 3)
+            + (180 if d.get("reasoning") else 0))
 
 def result_html(d: dict) -> str:
     lang = d["language"]
@@ -173,30 +186,34 @@ body{{direction:{'rtl' if rtl else 'ltr'};text-align:{'right' if rtl else 'left'
 .aih{{font-weight:700;color:#5b21b6;font-size:17px;margin-bottom:4px}}
 .ait{{font-size:18px;color:#1f2937;line-height:1.8}}
 .foot{{padding:10px 22px 16px;font-size:13px;color:#6b7280}}
+svg{{max-width:100%;height:auto}}
 @media(max-width:620px){{
-  body{{padding:2px}} .card{{border-radius:16px}}
-  .head{{padding:14px;gap:10px;align-items:flex-start}}
-  .head svg{{width:86px;min-width:86px;height:auto}}
-  .title{{font-size:23px}} .msg{{font-size:15px;line-height:1.55}}
-  .row{{padding:12px;gap:10px;justify-content:center}}
-  .gwrap svg{{width:118px}} .bars{{min-width:100%;width:100%}}
-  .bar{{gap:6px;font-size:13px}} .bl{{width:76px;font-size:12px}}
-  .bp{{width:34px;font-size:12px}} .track{{height:11px}}
-  .sec{{padding:7px 14px 0;font-size:17px}}
-  .step{{margin:8px 12px;padding:10px;gap:9px}}
-  .stxt{{font-size:15px;line-height:1.55}} .num{{min-width:29px;height:29px}}
-  .chips{{padding:6px 12px 12px}} .chip{{font-size:13px;padding:5px 10px}}
-  .ai{{margin:4px 12px 8px;padding:11px}}
-  .aih{{font-size:15px}} .ait{{font-size:15px;line-height:1.6}}
-  .foot{{padding:9px 12px 13px}}
+ body{{padding:2px}}.card{{border-radius:16px;border-width:1px}}
+ .head{{padding:14px;gap:10px;align-items:flex-start;flex-wrap:wrap}}
+ .head svg{{width:86px;max-width:28%;height:auto}}
+ .title{{font-size:clamp(21px,6vw,27px);line-height:1.35}}
+ .msg{{font-size:15px;line-height:1.65}}
+ .row{{padding:13px 14px;gap:12px;justify-content:center}}
+ .gwrap{{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}}
+ .gwrap svg{{width:112px;max-width:38%}}
+ .gl{{font-size:14px}}.gn{{font-size:11px;max-width:145px;margin:0}}
+ .bars{{width:100%;min-width:0;flex:1 1 100%}}
+ .bar{{gap:7px;font-size:12px;margin:8px 0}}.bl{{width:75px;font-size:12px}}.bp{{width:34px;font-size:12px}}
+ .track{{height:11px}}.sec{{padding:7px 14px 0;font-size:17px}}
+ .step{{margin:8px 12px;padding:10px;gap:9px;align-items:flex-start}}
+ .num{{min-width:29px;height:29px;font-size:13px}}.stxt{{font-size:15px;line-height:1.65}}
+ .chips{{padding:6px 14px 12px}}.chip{{font-size:12px;padding:5px 9px}}
+ .ai{{margin:5px 12px 8px;padding:11px 12px}}.aih{{font-size:15px}}.ait{{font-size:15px;line-height:1.7}}
+ .foot{{padding:9px 14px 13px;font-size:11px;line-height:1.5}}
 }}
+@media(prefers-reduced-motion:reduce){{*,*::before,*::after{{animation:none!important}}}}
 """
     js = f"""
 <script>
 (function(){{var el=document.getElementById('pct'),t={round(conf*100)},n=0;
 var iv=setInterval(function(){{n+=2;if(n>=t){{n=t;clearInterval(iv)}}el.textContent=n+'%'}},22)}})();
 </script>"""
-    return f"""<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>{FONT_LINK}<style>{css}</style></head><body>
+    return f"""<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>{FONT_LINK}<style>{css}</style></head><body>
 <div class='card {pulse}'>
   <div class='head'>{_illustration(level)}<div><div class='title'>{_h.escape(d['title'])}</div><div class='msg'>{_h.escape(d['message'])}</div></div></div>
   <div class='row'>
@@ -250,7 +267,7 @@ def care_height(d: dict) -> int:
         return 0
     lines = (len(c["tips"]) + len(c["avoid"]) + len(c["see_doctor_if"]) + len(c.get("medicines_note", []))
              + len(d.get("escalation_reasons", [])) + len(d.get("ai_causes", [])) + len(d.get("ai_tips", [])))
-    return int(330 + lines * 58 + len(c["medicines"]) * 215)
+    return int((350 + lines * 66 + len(c["medicines"]) * 235) * 1.12)
 
 
 def _li(items, cls=""):
@@ -316,18 +333,9 @@ body{{direction:{'rtl' if rtl else 'ltr'};text-align:{'right' if rtl else 'left'
 .info{{background:#eff6ff;border:1px solid #bfdbfe;border-radius:14px;padding:10px 16px;margin:10px 0;font-size:16px;color:#1e3a8a}}
 .doc{{background:#fef2f2;border:1px solid #fecaca;border-radius:14px;padding:10px 16px;margin:16px 0 0;font-size:17px;color:#991b1b}}
 .warn ul,.info ul,.doc ul{{margin:4px 0;padding-{'right' if rtl else 'left'}:20px;line-height:1.8}}
-@media(max-width:620px){{
-  body{{padding:2px}} .card{{border-radius:16px}}
-  .top{{padding:13px 15px;font-size:21px}} .body{{padding:5px 13px 14px}}
-  .sh{{font-size:17px;margin:13px 0 5px}} .ul{{font-size:15px;line-height:1.7}}
-  .chip{{font-size:13px;padding:5px 10px}}
-  .med{{padding:10px 12px;margin:8px 0}} .mn{{font-size:18px}}
-  .mf,.mr{{font-size:14px}} .warn,.info,.doc{{font-size:14px;padding:9px 11px}}
-  .mh{{font-size:12px}}
-}}
 """
     title = L["title_interim"] if interim else L["title_home"]
-    return (f"<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>{FONT_LINK}<style>{css}</style></head><body>"
+    return (f"<!doctype html><html><head><meta charset='utf-8'>{FONT_LINK}<style>{css}</style></head><body>"
             f"<div class='card'><div class='top'>{title}</div><div class='body'>{''.join(parts)}</div></div></body></html>")
 
 
@@ -367,4 +375,3 @@ th{{background:#f3f4f6;width:22%}} .lvl{{display:inline-block;background:{col};c
 {sec(T[6], d.get('red_flags_found', []))}{sec(T[7], [d['reasoning']] if d.get('reasoning') else [])}
 {sec(T[8], d['steps'])}{sec(T[9], c.get('tips', []))}{sec(T[10], meds)}{sec(T[11], c.get('see_doctor_if', []))}
 <div class='dis'>{e(d['disclaimer'])}</div></body></html>"""
-
