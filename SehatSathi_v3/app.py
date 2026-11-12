@@ -1,4 +1,40 @@
 # -*- coding: utf-8 -*-
+import os, sys, time, socket, subprocess
+import streamlit as st
+
+
+def _backend_up():
+    s = socket.socket()
+    s.settimeout(0.5)
+    try:
+        s.connect(("127.0.0.1", 8000))
+        return True
+    except OSError:
+        return False
+    finally:
+        s.close()
+
+
+@st.cache_resource
+def start_backend():
+    if _backend_up():
+        return True
+    here = os.path.dirname(os.path.abspath(__file__))
+    backend_dir = os.path.join(here, "sehatsathi", "backend")
+    subprocess.Popen(
+        [sys.executable, "-m", "uvicorn", "main:app",
+         "--host", "127.0.0.1", "--port", "8000"],
+        cwd=backend_dir,
+    )
+    for _ in range(40):
+        if _backend_up():
+            return True
+        time.sleep(1)
+    return False
+
+
+start_backend()
+
 import io
 import datetime
 import requests
