@@ -36,7 +36,7 @@ API_URL = "http://127.0.0.1:8000/triage"
 HERE = os.path.dirname(os.path.abspath(__file__))
 DB_FILE = os.path.join(HERE, "patients.json")
 
-st.set_page_config(page_title="صحت ساتھی • SehatSathi Pro", page_icon="🩺", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="صحت ساتھی • SehatSathi Pro", page_icon="🩺", layout="wide", initial_sidebar_state="auto")
 
 # ================================================================ storage (patients.json)
 def load_db():
@@ -61,16 +61,16 @@ TR = {
         "enter": "🚀 ایپ میں داخل ہوں", "back": "⬅️ ہوم اسکرین", "lang": "زبان / Language",
         "hello": "خوش آمدید، معالج 👋", "hello_s": "آج کس مریض کو بروقت اور درست طبی رہنمائی دینی ہے؟",
         "s_pat": "کل رجسٹرڈ مریض", "s_vis": "کل معائنے", "s_em": "ہنگامی کیسز", "s_td": "آج کے معائنے",
-        "dist": "📊 نتائج کی تقسیم (Triage Analytics)", "recent": "🕘 حالیہ معائنے", "none": "ابھی کوئی ریکارڈ موجود نہیں۔ پہلا معائنہ شروع کریں!",
+        "dist": "📊 نتائج کی تقسیم", "recent": "🕘 حالیہ معائنے", "none": "ابھی کوئی ریکارڈ موجود نہیں۔ پہلا معائنہ شروع کریں!",
         "q_new": "➕ نیا معائنہ شروع کریں", "q_rec": "📂 تمام ریکارڈز دیکھیں",
         "step1": "مرحلہ 1 • مریض کا انتخاب یا اندراج", "step2": "مرحلہ 2 • علامات (ٹچ، آواز یا تحریر)",
         "who": "👤 مریض", "new_p": "➕ نیا مریض رجسٹر کریں", "name": "مریض کا نام *", "age": "عمر", "age_ph": "مثال: 2 سال یا 35 سال",
         "gender": "جنس", "phone": "فون نمبر", "city": "شہر / گاؤں", "blood": "بلڈ گروپ",
         "allergy": "الرجی (اگر ہو)", "chronic": "پرانی بیماری (شوگر، بی پی...)",
         "need_name": "براہ کرم مریض کا نام درج کریں۔", "saved_p": "مریض محفوظ ہو گیا ✅",
-        "tap": "👆 عام علامات پر کلک کریں (ایک یا زیادہ منتخب کریں)", "symp": "علامات",
+        "tap": "👆 عام علامات پر کلک کریں", "symp": "علامات",
         "speak": "🎤 یا بول کر بتائیں (اردو وائس ان پٹ)", "mic": "بولنے کے لیے مائیک دبائیں",
-        "type": "✍️ یا تفصیل خود لکھیں (اردو، رومن اردو یا انگریزی)", "type_ph": "مثال: تین دن سے تیز بخار، جسم میں درد اور دست لگے ہوئے ہیں...",
+        "type": "✍️ یا تفصیل خود لکھیں (اردو، رومن اردو یا انگریزی)", "type_ph": "مثال: تین دن سے تیز بخار، جسم میں درد اور دست...",
         "check": "🔍 AI طبی جائزہ لیں", "enter_s": "پہلے علامات لکھیں یا اوپر دیے گئے بٹنوں سے چنیں۔",
         "listen": "🔊 نتیجہ آواز میں سنیں", "more": "🩺 AI کے مزید سوالات",
         "more_cap": "مزید درست فیصلے کے لیے نیچے دیے گئے سوالات کے مختصر جواب دیں:",
@@ -94,14 +94,14 @@ TR = {
         "s_pat": "Total Patients", "s_vis": "Assessments", "s_em": "Emergencies", "s_td": "Checked Today",
         "dist": "📊 Triage Distribution", "recent": "🕘 Recent Assessments", "none": "No records yet. Start your first patient assessment!",
         "q_new": "➕ Start New Assessment", "q_rec": "📂 Open Patient Records",
-        "step1": "Step 1 • Patient Profile", "step2": "Step 2 • Clinical Symptoms (Tap, Speak, or Type)",
+        "step1": "Step 1 • Patient Profile", "step2": "Step 2 • Clinical Symptoms",
         "who": "👤 Patient", "new_p": "➕ Register New Patient", "name": "Full Name *", "age": "Age", "age_ph": "e.g. 2 years or 35 yrs",
         "gender": "Gender", "phone": "Phone Number", "city": "City / Village", "blood": "Blood Group",
         "allergy": "Known Allergies", "chronic": "Chronic Conditions (Diabetes, HTN...)",
         "need_name": "Patient name is required to proceed.", "saved_p": "Patient saved ✅",
         "tap": "👆 Quick-Select Common Symptoms", "symp": "Symptoms",
         "speak": "🎤 Voice Dictation (Urdu)", "mic": "Press the mic to speak",
-        "type": "✍️ Clinical Notes (Urdu, Roman Urdu, or English)", "type_ph": "e.g. High fever and diarrhea for 3 days with body aches...",
+        "type": "✍️ Clinical Notes (Urdu, Roman Urdu, or English)", "type_ph": "e.g. High fever and diarrhea for 3 days...",
         "check": "🔍 Run AI Triage Assessment", "enter_s": "Please enter symptoms or select from the pills above.",
         "listen": "🔊 Listen to Audio Guidance", "more": "🩺 AI Follow-up Questions",
         "more_cap": "Answer these clarifying questions for higher triage accuracy:",
@@ -189,7 +189,7 @@ PG = st.session_state["pg"]
 with st.sidebar:
     st.markdown("""
     <div style='display:flex;align-items:center;gap:12px;padding:6px 4px 16px;border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:14px;'>
-        <div style='width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#34d399,#059669);display:grid;place-items:center;font-size:22px;box-shadow:0 6px 16px rgba(16,185,129,0.35);'>🩺</div>
+        <div style='width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#34d399,#059669);display:grid;place-items:center;font-size:22px;box-shadow:0 6px 16px rgba(16,185,129,0.35);flex-shrink:0;'>🩺</div>
         <div>
             <div style='font-size:18px;font-weight:800;color:#ffffff!important;line-height:1.1;'>صحت ساتھی</div>
             <div style='font-size:11px;font-weight:600;color:#a7f3d0!important;letter-spacing:0.06em;'>SEHATSATHI PRO</div>
@@ -206,238 +206,209 @@ with st.sidebar:
         st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
         st.button(T["back"], on_click=go, args=("welcome",), use_container_width=True)
 
-    # Backend status pill in sidebar
     status_ok = _backend_up()
     st.markdown(f"""
     <div style='margin-top:28px;padding:10px 12px;border-radius:14px;background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:9px;font-size:12px;'>
-        <span style='width:9px;height:9px;border-radius:50%;background:{"#34d399" if status_ok else "#f87171"};box-shadow:0 0 8px {"#34d399" if status_ok else "#f87171"};'></span>
+        <span style='width:9px;height:9px;border-radius:50%;background:{"#34d399" if status_ok else "#f87171"};box-shadow:0 0 8px {"#34d399" if status_ok else "#f87171"};flex-shrink:0;'></span>
         <span style='color:#d1fae5!important;font-weight:600;'>{"AI Engine Online" if status_ok else "Engine Starting..."}</span>
     </div>
     """, unsafe_allow_html=True)
 
 RTL = out_lang == "ur"
 DIR, ALIGN = ("rtl", "right") if RTL else ("ltr", "left")
-HIDE_SB = "[data-testid='stSidebar'],[data-testid='stSidebarCollapsedControl']{display:none}" if PG == "welcome" else ""
 
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700;800&display=swap');
 :root{
  --ink:#0f172a;--muted:#64748b;--teal:#0d9488;--teal-dark:#0f766e;--blue:#2563eb;
- --line:rgba(226,232,240,0.85);--surface:rgba(255,255,255,0.88);
- --shadow:0 12px 32px -4px rgba(15,23,42,0.06), 0 4px 12px -2px rgba(15,23,42,0.03);
- --shadow-hover:0 20px 40px -8px rgba(13,148,136,0.14);
- --radius:24px;
+ --line:rgba(226,232,240,0.85);--surface:rgba(255,255,255,0.95);
+ --shadow:0 10px 30px -4px rgba(15,23,42,0.05);
+ --radius:20px;
 }
 *{box-sizing:border-box}
-html,body,.stApp{min-width:320px}
-html,body,[class*="css"],.stApp,textarea,input,button,label,p,h1,h2,h3,h4,li,span,div{
- font-family:'Plus Jakarta Sans','Noto Naskh Arabic','Jameel Noori Nastaleeq','Segoe UI',sans-serif!important;
+
+/* IMPORTANT: Apply custom fonts ONLY to text elements, NEVER to Streamlit Material Icons */
+body, p, h1, h2, h3, h4, li, label, input, textarea, button, .stMarkdown, .pt, .sub, .stat, .vr, .pc, .tg, .pill, .step-badge {
+ font-family:'Plus Jakarta Sans','Noto Naskh Arabic','Jameel Noori Nastaleeq','Segoe UI',sans-serif;
 }
+
+/* Keep Streamlit's internal icons (keyboard_arrow_down, etc.) intact */
+[data-testid="stIconMaterial"], .material-symbols-rounded, span[class*="Icon"] {
+ font-family: 'Material Symbols Rounded' !important;
+}
+
 .stApp{
- direction:__DIR__;text-align:__AL__;color:var(--ink);
+ color:var(--ink);
  background:
-  radial-gradient(circle at 8% 4%, rgba(20,184,166,0.13) 0%, transparent 32%),
-  radial-gradient(circle at 92% 8%, rgba(59,130,246,0.11) 0%, transparent 34%),
-  radial-gradient(circle at 50% 95%, rgba(16,185,129,0.08) 0%, transparent 40%),
+  radial-gradient(circle at 8% 4%, rgba(20,184,166,0.12) 0%, transparent 32%),
+  radial-gradient(circle at 92% 8%, rgba(59,130,246,0.10) 0%, transparent 34%),
   #f4f8fa;
 }
-header[data-testid="stHeader"]{background:rgba(244,248,250,0.72);backdrop-filter:blur(16px);border-bottom:1px solid rgba(226,232,240,0.6)}
+header[data-testid="stHeader"]{background:rgba(244,248,250,0.85);backdrop-filter:blur(12px)}
 [data-testid="stMainBlockContainer"], [data-testid="stAppViewContainer"]>.main .block-container{
- width:100%;max-width:1360px;padding:clamp(16px,2.5vw,32px) clamp(14px,3vw,40px) 60px;
+ width:100%;max-width:1320px;padding:16px clamp(12px,2.5vw,36px) 50px;
 }
-[data-testid="stVerticalBlock"]{gap:1.1rem}
-[data-testid="stHorizontalBlock"]{gap:clamp(14px,2vw,24px);align-items:stretch}
 
-/* Glass Sidebar */
+/* Sidebar styling */
 [data-testid="stSidebar"]{
  background:linear-gradient(175deg,#042f2e 0%,#064e3b 48%,#0f766e 100%);
- border-right:1px solid rgba(255,255,255,0.12);
- box-shadow:8px 0 30px rgba(4,47,46,0.15);
+ border-right:1px solid rgba(255,255,255,0.1);
 }
-[data-testid="stSidebar"]>div{padding:24px 16px}
-[data-testid="stSidebar"] *{color:#ecfdf5!important}
-[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"]{gap:9px}
+[data-testid="stSidebar"]>div{padding:20px 14px}
+[data-testid="stSidebar"] p, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div[role="radiogroup"] label {color:#ecfdf5!important}
+[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"]{gap:8px}
 [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label{
- background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);
- border-radius:16px;padding:11px 14px;transition:all .22s cubic-bezier(.4,0,.2,1);font-weight:600;
-}
-[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover{
- background:rgba(255,255,255,0.13);transform:translateX(__SHIFT__);
+ background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+ border-radius:14px;padding:10px 12px;font-weight:600;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked){
- background:linear-gradient(135deg,rgba(52,211,153,0.28),rgba(16,185,129,0.18));
- border-color:rgba(110,231,183,0.55);box-shadow:0 8px 20px rgba(0,0,0,0.15);font-weight:700;
+ background:linear-gradient(135deg,rgba(52,211,153,0.3),rgba(16,185,129,0.2));
+ border-color:rgba(110,231,183,0.6);font-weight:750;
 }
 [data-testid="stSidebar"] button{
- background:rgba(255,255,255,0.92)!important;color:#064e3b!important;
- border-radius:14px!important;font-weight:750!important;border:0!important;
- box-shadow:0 6px 16px rgba(0,0,0,0.12);
+ background:rgba(255,255,255,0.95)!important;color:#064e3b!important;
+ border-radius:12px!important;font-weight:750!important;border:0!important;
 }
 
-/* Typography */
-h1,h2,h3,h4{color:var(--ink);letter-spacing:-.025em}
-p,label,.stMarkdown{text-align:__AL__}
-.stCaption,small{color:var(--muted)}
+/* Text Alignment (Applies cleanly without breaking Streamlit layout grids) */
+.stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4,
+.pt, .sub, .vr, .pc, .stat, .lg {
+ direction:__DIR__;text-align:__AL__;
+}
 
-/* Glassmorphism Containers & Expanders */
+/* Containers & Expanders */
 div[data-testid="stVerticalBlockBorderWrapper"]{
- border:1px solid rgba(255,255,255,0.95);
- outline:1px solid rgba(203,213,225,0.55);
+ border:1px solid rgba(203,213,225,0.65);
  border-radius:var(--radius);
  background:var(--surface);
- backdrop-filter:blur(16px);
  box-shadow:var(--shadow);
- padding:clamp(16px,2.2vw,24px);
- transition:box-shadow .25s ease, transform .25s ease;
+ padding:16px;
 }
 div[data-testid="stExpander"]{
- border:1px solid rgba(203,213,225,0.7);
- border-radius:20px;
- background:rgba(255,255,255,0.92);
- backdrop-filter:blur(12px);
+ border:1px solid rgba(203,213,225,0.75);
+ border-radius:18px;
+ background:#ffffff;
  overflow:hidden;
- box-shadow:0 6px 20px rgba(15,23,42,0.04);
- transition:all .2s ease;
+ box-shadow:0 4px 14px rgba(15,23,42,0.03);
 }
-div[data-testid="stExpander"]:hover{border-color:#5eead4;box-shadow:0 12px 26px rgba(13,148,136,0.09)}
-div[data-testid="stExpander"] summary{padding:14px 18px;font-weight:700;font-size:15px}
+div[data-testid="stExpander"] summary{
+ padding:14px 16px;font-weight:700;font-size:15px;
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+div[data-testid="stExpander"] summary p {
+ margin:0; direction:__DIR__; text-align:__AL__; flex:1;
+}
 
-/* Inputs & Interactive Widgets */
+/* Inputs, Textareas & Selectboxes */
 input,textarea,[data-baseweb="select"]>div,[data-baseweb="input"]>div{
  direction:__DIR__;text-align:__AL__;
- border-radius:16px!important;border:1.5px solid #e2e8f0!important;
- background:#ffffff!important;min-height:48px;
- transition:border-color .2s, box-shadow .2s;
+ border-radius:14px!important;border:1.5px solid #cbd5e1!important;
+ background:#ffffff!important;min-height:46px;font-size:14.5px;
 }
-input:focus,textarea:focus{border-color:#0d9488!important;box-shadow:0 0 0 3px rgba(13,148,136,0.14)!important}
-textarea{min-height:118px!important;padding:14px 16px!important;line-height:1.6!important}
+input:focus,textarea:focus{border-color:#0d9488!important;box-shadow:0 0 0 3px rgba(13,148,136,0.12)!important}
+textarea{min-height:110px!important;padding:12px 14px!important;line-height:1.5!important}
 [data-testid="stTextInput"] label,[data-testid="stTextArea"] label,[data-testid="stSelectbox"] label{
- font-weight:700;color:#334155;font-size:13.5px;margin-bottom:4px;
+ font-weight:700;color:#334155;font-size:13.5px;margin-bottom:4px;display:block;direction:__DIR__;text-align:__AL__;
 }
 
-/* Glowing Audio Recorder */
+/* Audio input & Pills */
 [data-testid="stAudioInput"]{
- padding:16px;border:1.5px dashed #2dd4bf;border-radius:20px;
- background:linear-gradient(135deg,rgba(240,253,250,0.95),rgba(239,246,255,0.95));
- box-shadow:inset 0 2px 8px rgba(20,184,166,0.06);
+ padding:12px;border:1.5px dashed #2dd4bf;border-radius:16px;
+ background:linear-gradient(135deg,#f0fdfa,#eff6ff);
 }
-
-/* Interactive Symptom Pills */
-[data-testid="stPills"]{gap:10px!important}
+[data-testid="stPills"]{gap:8px!important;direction:__DIR__}
 [data-testid="stPills"] button{
- border-radius:999px!important;border:1.5px solid #e2e8f0!important;
- min-height:44px;padding:8px 16px!important;font-weight:650!important;
- background:#ffffff!important;color:#1e293b!important;
- box-shadow:0 2px 6px rgba(15,23,42,0.03);
- transition:all .18s cubic-bezier(.4,0,.2,1)!important;
-}
-[data-testid="stPills"] button:hover{
- border-color:#5eead4!important;transform:translateY(-2px);
- box-shadow:0 6px 14px rgba(13,148,136,0.12)!important;
+ border-radius:999px!important;border:1.5px solid #cbd5e1!important;
+ min-height:40px;padding:6px 14px!important;font-weight:650!important;
+ background:#ffffff!important;color:#1e293b!important;font-size:13.5px;
 }
 [data-testid="stPills"] button[aria-pressed="true"]{
  background:linear-gradient(135deg,#0d9488,#059669)!important;
  border-color:#0d9488!important;color:#ffffff!important;
- box-shadow:0 8px 18px rgba(13,148,136,0.28)!important;
 }
 
 /* Buttons */
 div.stButton>button,div.stDownloadButton>button,[data-testid="stFormSubmitButton"] button{
- min-height:50px;border-radius:16px;border:1.5px solid #e2e8f0;
- font-weight:750;font-size:15px;background:#ffffff;color:#0f172a;
- transition:all .2s cubic-bezier(.4,0,.2,1);
-}
-div.stButton>button:hover,div.stDownloadButton>button:hover{
- transform:translateY(-2px);box-shadow:0 12px 24px rgba(15,23,42,0.09);border-color:#5eead4;
+ min-height:48px;border-radius:14px;border:1.5px solid #cbd5e1;
+ font-weight:750;font-size:14.5px;background:#ffffff;color:#0f172a;
+ transition:all .15s ease;
 }
 div.stButton>button[kind="primary"],[data-testid="stFormSubmitButton"] button{
- width:100%;min-height:56px;font-size:1.06rem;border:0;color:#ffffff!important;
+ width:100%;min-height:52px;font-size:1rem;border:0;color:#ffffff!important;
  background:linear-gradient(120deg,#0d9488 0%,#0284c7 52%,#2563eb 100%);
- background-size:200% auto;
- box-shadow:0 12px 26px -4px rgba(13,148,136,0.36);
-}
-div.stButton>button[kind="primary"]:hover,[data-testid="stFormSubmitButton"] button:hover{
- background-position:right center;
- box-shadow:0 16px 32px -4px rgba(37,99,235,0.42);
+ box-shadow:0 8px 20px -4px rgba(13,148,136,0.3);
 }
 div.stDownloadButton>button{width:100%}
 
-/* Bento KPI Stats */
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:14px 0 26px}
+/* Dashboard Stats Grid (Responsive Laptop & Mobile) */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:10px 0 20px;direction:__DIR__}
 .stat{
- background:rgba(255,255,255,0.92);backdrop-filter:blur(14px);
- border-radius:22px;padding:22px;
- border:1px solid rgba(255,255,255,0.95);outline:1px solid rgba(226,232,240,0.75);
+ background:#ffffff;border-radius:18px;padding:18px 16px;
+ border:1px solid rgba(226,232,240,0.9);
  box-shadow:var(--shadow);position:relative;overflow:hidden;min-width:0;
- transition:transform .22s ease, box-shadow .22s ease;
 }
-.stat:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
-.stat:before{content:'';position:absolute;top:0;bottom:0;__SIDE__:0;width:5px;background:var(--c)}
-.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.stat-ico{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:20px;background:color-mix(in srgb, var(--c) 12%, white)}
-.stat b{display:block;font-size:clamp(30px,3.2vw,42px);line-height:1.05;color:#0f172a;font-weight:800;letter-spacing:-0.03em}
-.stat span{display:block;color:#64748b;font-weight:650;font-size:13.5px;margin-top:6px}
+.stat:before{content:'';position:absolute;top:0;bottom:0;__SIDE__:0;width:4px;background:var(--c)}
+.stat b{display:block;font-size:clamp(24px,3vw,36px);line-height:1.1;color:#0f172a;font-weight:800}
+.stat span{display:block;color:#64748b;font-weight:650;font-size:12.5px;margin-top:5px}
 
-/* Page Titles & Step Headers */
-.pt{font-size:clamp(28px,3.6vw,40px);font-weight:800;margin:0;color:#0f172a;letter-spacing:-.03em;line-height:1.2}
-.sub{color:#64748b;margin:6px 0 18px;font-size:15.5px}
+.pt{font-size:clamp(24px,3.2vw,36px);font-weight:800;margin:0;color:#0f172a;line-height:1.2}
+.sub{color:#64748b;margin:4px 0 16px;font-size:14.5px}
+.step-wrap{display:flex;justify-content:__FLEX__;margin-bottom:6px}
 .step-badge{
- display:inline-flex;align-items:center;gap:8px;
+ display:inline-flex;align-items:center;gap:6px;
  background:linear-gradient(135deg,#f0fdfa,#eff6ff);
  border:1px solid #99f6e4;color:#0f766e;
- padding:6px 14px;border-radius:999px;font-size:13px;font-weight:800;margin-bottom:8px;
+ padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:800;
 }
 
-/* Triage Analytics Bar */
-.mix{display:flex;height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0;margin:16px 0 14px;gap:2px}
-.lg{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;font-weight:600;color:#475569}
-.lg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:6px}
+/* Analytics & Lists */
+.mix{display:flex;height:12px;border-radius:999px;overflow:hidden;background:#e2e8f0;margin:14px 0 10px;gap:2px}
+.lg{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;font-weight:600;color:#475569}
+.lg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:5px}
 
-/* Visit & Patient Rows */
 .vr{
- display:flex;align-items:center;gap:14px;padding:13px 10px;border-radius:16px;
- border-bottom:1px solid #f1f5f9;min-width:0;transition:background .15s;
+ display:flex;align-items:center;gap:12px;padding:11px 8px;border-radius:14px;
+ border-bottom:1px solid #f1f5f9;min-width:0;
 }
-.vr:hover{background:#f8fafc}
-.vr:last-child{border-bottom:0}
 .av{
- width:44px;height:44px;border-radius:15px;color:#fff;font-weight:800;font-size:16px;
- display:grid;place-items:center;flex:0 0 44px;
+ width:40px;height:40px;border-radius:13px;color:#fff;font-weight:800;font-size:15px;
+ display:grid;place-items:center;flex:0 0 40px;
  background:linear-gradient(135deg,#0d9488,#2563eb);
- box-shadow:0 6px 14px rgba(13,148,136,0.22);
 }
 .vr>div:nth-child(2){min-width:0;flex:1}
-.vr .t{font-weight:750;color:#0f172a;font-size:15px;overflow-wrap:anywhere}
-.vr .s{font-size:12.5px;color:#64748b;margin-top:2px;overflow-wrap:anywhere}
+.vr .t{font-weight:750;color:#0f172a;font-size:14px;overflow-wrap:anywhere}
+.vr .s{font-size:11.5px;color:#64748b;margin-top:2px;overflow-wrap:anywhere}
 .pill{
- margin-inline-start:auto;padding:6px 12px;border-radius:999px;
- font-weight:750;font-size:11.5px;color:#fff;white-space:nowrap;
- box-shadow:0 4px 10px rgba(0,0,0,0.1);
+ margin-inline-start:auto;padding:5px 10px;border-radius:999px;
+ font-weight:750;font-size:11px;color:#fff;white-space:nowrap;flex-shrink:0;
 }
-.pc{display:flex;gap:16px;align-items:center;padding:6px 2px;min-width:0}
+.pc{display:flex;gap:14px;align-items:center;padding:4px 0;min-width:0}
 .pc>div:last-child{min-width:0;overflow-wrap:anywhere}
-.pc .av{width:56px;height:56px;font-size:22px;border-radius:18px;flex:0 0 56px}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.tg{background:#eff6ff;color:#1d4ed8;border:1px solid #dbeafe;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:700}
+.pc .av{width:50px;height:50px;font-size:20px;border-radius:16px;flex:0 0 50px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tg{background:#eff6ff;color:#1d4ed8;border:1px solid #dbeafe;border-radius:8px;padding:3px 8px;font-size:11.5px;font-weight:700}
 .tg.r{background:#fef2f2;color:#b91c1c;border-color:#fecaca}
 
-iframe{max-width:100%;border:0;border-radius:24px}
+iframe{max-width:100%;border:0;border-radius:20px}
 
-@media(max-width:1050px){
- .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:760px){
- [data-testid="stMainBlockContainer"],[data-testid="stAppViewContainer"]>.main .block-container{padding:12px 12px 36px}
+/* Mobile & Tablet Responsive Stacking */
+@media(max-width:900px){
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
  [data-testid="stHorizontalBlock"]{flex-direction:column!important;gap:12px!important}
  [data-testid="stHorizontalBlock"]>[data-testid="column"]{width:100%!important;min-width:100%!important;flex:1 1 100%!important}
- .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- .stat{padding:16px}
- div.stButton>button,div.stDownloadButton>button{width:100%}
 }
-__HIDE__
+@media(max-width:600px){
+ [data-testid="stMainBlockContainer"],[data-testid="stAppViewContainer"]>.main .block-container{padding:12px 10px 32px}
+ .stat{padding:14px 12px}
+ .stat b{font-size:24px}
+ .pt{font-size:22px}
+ .vr{flex-wrap:wrap}
+ .pill{margin-inline-start:0}
+ div.stButton>button,div.stDownloadButton>button{width:100%!important}
+}
 </style>""".replace("__DIR__", DIR).replace("__AL__", ALIGN).replace("__SIDE__", "right" if RTL else "left") \
-            .replace("__SHIFT__", "-4px" if RTL else "4px").replace("__HIDE__", HIDE_SB), unsafe_allow_html=True)
+            .replace("__FLEX__", "flex-end" if RTL else "flex-start"), unsafe_allow_html=True)
 
 
 # ================================================================ helpers
@@ -456,7 +427,7 @@ def stats(db):
 def visit_row(p, v):
     c = LEVEL_COL[v["level"]]
     return (f"<div class='vr'><div class='av' style='background:{c}'>{esc(initials(p['name']))}</div>"
-            f"<div><div class='t'>{esc(p['name'])}</div><div class='s'>{esc(v['when'])} • {esc(v['symptoms'][:65])}</div></div>"
+            f"<div><div class='t'>{esc(p['name'])}</div><div class='s'>{esc(v['when'])} • {esc(v['symptoms'][:50])}</div></div>"
             f"<span class='pill' style='background:{c}'>{esc(v['title'])}</span></div>")
 
 
@@ -466,71 +437,46 @@ def landing_html():
 <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
 <link href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700;800&display=swap' rel='stylesheet'>
 <style>
-*{{box-sizing:border-box}}html,body{{margin:0;width:100%;font-family:'Plus Jakarta Sans','Noto Naskh Arabic','Segoe UI',sans-serif;background:transparent}}
+*{{box-sizing:border-box}}html,body{{margin:0;width:100%;font-family:'Plus Jakarta Sans','Noto Naskh Arabic',sans-serif;background:transparent}}
 .w{{
- position:relative;isolation:isolate;overflow:hidden;min-height:510px;border-radius:32px;color:#fff;
- padding:clamp(30px,5vw,56px) clamp(18px,4vw,46px);text-align:center;
+ position:relative;isolation:isolate;overflow:hidden;min-height:460px;border-radius:28px;color:#fff;
+ padding:clamp(24px,4vw,48px) clamp(14px,3vw,36px);text-align:center;
  background:
-  radial-gradient(750px 380px at 85% 0%,rgba(59,130,246,0.48),transparent),
-  radial-gradient(650px 400px at 10% 100%,rgba(16,185,129,0.42),transparent),
+  radial-gradient(600px 320px at 85% 0%,rgba(59,130,246,0.45),transparent),
+  radial-gradient(500px 320px at 10% 100%,rgba(16,185,129,0.4),transparent),
   linear-gradient(135deg,#042f2e 0%,#064e3b 52%,#0f172a 100%);
- box-shadow:0 24px 60px rgba(4,47,46,0.28);
- border:1px solid rgba(255,255,255,0.14);
+ box-shadow:0 20px 50px rgba(4,47,46,0.22);
+ border:1px solid rgba(255,255,255,0.12);
 }}
-.w:before{{
- content:'';position:absolute;inset:0;z-index:-1;opacity:.14;
- background-image:linear-gradient(rgba(255,255,255,0.16) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.16) 1px,transparent 1px);
- background-size:36px 36px;mask-image:radial-gradient(ellipse at center,black 40%,transparent 85%);
-}}
-.orb{{position:absolute;z-index:-1;border-radius:50%;filter:blur(40px);opacity:0.45;animation:float 8s ease-in-out infinite}}
-@keyframes float{{50%{{transform:translateY(-24px) scale(1.06)}}}}
-.ecg{{position:absolute;left:0;right:0;top:46%;opacity:.2;pointer-events:none}}
-.ecg path{{stroke:#34d399;stroke-width:2.5;fill:none;stroke-dasharray:900;stroke-dashoffset:900;animation:dash 3.8s linear infinite}}
-@keyframes dash{{to{{stroke-dashoffset:-900}}}}
-.in{{position:relative;z-index:1;max-width:940px;margin:auto}}
-.brand-pill{{
- display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(110,231,183,0.4);
- background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);
- padding:8px 18px;border-radius:999px;color:#a7f3d0;font-size:12.5px;font-weight:700;letter-spacing:.06em;
-}}
-.lg{{font-size:clamp(46px,6vw,64px);margin:14px 0 2px;filter:drop-shadow(0 10px 22px rgba(0,0,0,0.3));animation:pulse 2.6s ease-in-out infinite}}
-@keyframes pulse{{50%{{transform:scale(1.08)}}}}
-h1{{font-size:clamp(40px,7vw,76px);margin:4px 0 4px;font-weight:800;line-height:1.22;letter-spacing:-.03em;color:#fff}}
-.subline{{font-size:clamp(16px,2vw,21px);color:#a7f3d0;margin:0 0 28px;line-height:1.6;font-weight:500}}
-.g{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:920px;margin:0 auto}}
+.lg{{font-size:clamp(40px,6vw,56px);margin:10px 0 2px}}
+h1{{font-size:clamp(32px,6.5vw,64px);margin:2px 0;font-weight:800;line-height:1.2;color:#fff}}
+.subline{{font-size:clamp(14px,1.8vw,19px);color:#a7f3d0;margin:0 0 22px;font-weight:500}}
+.g{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:880px;margin:0 auto}}
 .c{{
- background:linear-gradient(155deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04));
- border:1px solid rgba(255,255,255,0.22);backdrop-filter:blur(12px);
- border-radius:22px;padding:20px 12px;font-weight:700;font-size:14.5px;
- transition:transform .2s;box-shadow:inset 0 1px rgba(255,255,255,0.2);
+ background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);
+ backdrop-filter:blur(8px);border-radius:18px;padding:16px 8px;font-weight:700;font-size:13px;
 }}
-.c:hover{{transform:translateY(-4px);border-color:rgba(110,231,183,0.6)}}
-.c span{{display:block;font-size:30px;margin-bottom:8px}}
-.c small{{display:block;font-weight:500;color:#d1fae5;margin-top:6px;font-size:12px;line-height:1.5}}
-.trust{{margin:24px 0 0;color:#99f6e4;font-size:12.5px;letter-spacing:.03em;opacity:0.9}}
-@media(max-width:700px){{.w{{min-height:0;border-radius:24px;padding:28px 14px}}.g{{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}}}
+.c span{{display:block;font-size:26px;margin-bottom:6px}}
+.c small{{display:block;font-weight:500;color:#d1fae5;margin-top:4px;font-size:11px}}
+.trust{{margin:18px 0 0;color:#99f6e4;font-size:12px}}
+@media(max-width:700px){{.w{{min-height:0;padding:22px 12px}}.g{{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}.c{{padding:12px 6px;font-size:12px}}.c span{{font-size:22px}}}}
 </style></head><body><div class='w'>
-<div class='orb' style='width:260px;height:260px;background:#10b981;left:-60px;top:-60px'></div>
-<div class='orb' style='width:240px;height:240px;background:#3b82f6;right:-40px;bottom:-50px;animation-delay:2s'></div>
-<svg class='ecg' viewBox='0 0 800 80' preserveAspectRatio='none' height='95' width='100%'><path d='M0 40H150L170 40L185 8L205 72L222 40H420L440 40L455 14L475 66L492 40H800'/></svg>
-<div class='in'>
- <div class='brand-pill'>✦ NEXT-GEN AI CLINICAL TRIAGE SYSTEM</div>
- <div class='lg'>🩺</div>
- <h1>صحت ساتھی</h1>
- <p class='subline'>SehatSathi Pro &nbsp;•&nbsp; صحیح وقت پر صحیح طبی فیصلہ</p>
- <div class='g'>
-  <div class='c'><span>🧠</span>Hybrid AI + ML<small>ہنگامی / جلد / گھر پر علاج</small></div>
-  <div class='c'><span>🎤</span>Urdu Voice AI<small>بول کر علامات درج کریں</small></div>
-  <div class='c'><span>📂</span>Smart EHR<small>مریضوں کا مکمل ریکارڈ</small></div>
-  <div class='c'><span>🚑</span>Instant Alert<small>ہنگامی صورتحال کی نشاندہی</small></div>
- </div>
- <div class='trust'>اردو &nbsp;•&nbsp; Roman Urdu &nbsp;•&nbsp; English &nbsp;|&nbsp; Built for Fast Community Healthcare</div>
-</div></div></body></html>"""
+<div class='lg'>🩺</div>
+<h1>صحت ساتھی</h1>
+<p class='subline'>SehatSathi Pro &nbsp;•&nbsp; صحیح وقت پر صحیح طبی فیصلہ</p>
+<div class='g'>
+ <div class='c'><span>🧠</span>Hybrid AI<small>ہنگامی / جلد / گھر</small></div>
+ <div class='c'><span>🎤</span>Voice AI<small>بول کر علامات درج کریں</small></div>
+ <div class='c'><span>📂</span>Smart EHR<small>مریضوں کا ریکارڈ</small></div>
+ <div class='c'><span>🚑</span>Instant Alert<small>ہنگامی الرٹ</small></div>
+</div>
+<div class='trust'>اردو &nbsp;•&nbsp; Roman Urdu &nbsp;•&nbsp; English</div>
+</div></body></html>"""
 
 
 if PG == "welcome":
-    render_html(landing_html(), 560)
-    _, mid, _ = st.columns([1, 1.3, 1])
+    render_html(landing_html(), 520)
+    _, mid, _ = st.columns([1, 1.2, 1])
     mid.button(T["enter"], type="primary", on_click=go, args=("dashboard",))
     st.caption(T["foot"])
     st.stop()
@@ -549,30 +495,28 @@ if PG == "dashboard":
         (T["s_td"], S["td"], "#f59e0b", "📅"),
     ]
     st.markdown("<div class='stats'>" + "".join(
-        f"<div class='stat' style='--c:{c}'><div class='stat-top'><div class='stat-ico'>{ico}</div></div><b>{n}</b><span>{l}</span></div>"
+        f"<div class='stat' style='--c:{c}'><div style='display:flex;align-items:center;margin-bottom:8px;'><div style='width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:color-mix(in srgb, var(--c) 12%, white);'>{ico}</div></div><b>{n}</b><span>{l}</span></div>"
         for l, n, c, ico in cards) + "</div>", unsafe_allow_html=True)
 
     b1, b2 = st.columns(2)
     b1.button(T["q_new"], type="primary", on_click=check_for, args=("__new__",))
     b2.button(T["q_rec"], on_click=go, args=("records",), use_container_width=True)
 
-    c1, c2 = st.columns([1, 1.45])
+    c1, c2 = st.columns([1, 1.4])
     with c1, st.container(border=True):
         st.markdown(f"#### {T['dist']}")
         tot = max(S["vis"], 1)
         em_p = 100 * S["mix"]["emergency"] / tot
         ur_p = 100 * S["mix"]["urgent"] / tot
-        hm_p = 100 * S["mix"]["home"] / tot
 
-        # Clean SVG Donut visualization
         st.markdown(f"""
-        <div style='display:flex;align-items:center;justify-content:center;margin:14px 0 8px;'>
-            <div style='width:148px;height:148px;border-radius:50%;
+        <div style='display:flex;align-items:center;justify-content:center;margin:12px 0 6px;'>
+            <div style='width:130px;height:130px;border-radius:50%;
                 background:conic-gradient(#ef4444 0% {em_p}%, #f59e0b {em_p}% {em_p+ur_p}%, #10b981 {em_p+ur_p}% 100%);
-                display:grid;place-items:center;box-shadow:0 8px 20px rgba(15,23,42,0.08);'>
-                <div style='width:98px;height:98px;border-radius:50%;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:center;'>
-                    <b style='font-size:26px;color:#0f172a;line-height:1;'>{S['vis']}</b>
-                    <span style='font-size:11px;color:#64748b;font-weight:700;margin-top:3px;'>TOTAL</span>
+                display:grid;place-items:center;box-shadow:0 6px 16px rgba(15,23,42,0.08);'>
+                <div style='width:86px;height:86px;border-radius:50%;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:center;'>
+                    <b style='font-size:24px;color:#0f172a;line-height:1;'>{S['vis']}</b>
+                    <span style='font-size:10px;color:#64748b;font-weight:700;margin-top:2px;'>TOTAL</span>
                 </div>
             </div>
         </div>
@@ -586,7 +530,7 @@ if PG == "dashboard":
 
     with c2, st.container(border=True):
         st.markdown(f"#### {T['recent']}")
-        rows = sorted(S["all"], key=lambda pv: pv[1]["ts"], reverse=True)[:6]
+        rows = sorted(S["all"], key=lambda pv: pv[1]["ts"], reverse=True)[:5]
         st.markdown("".join(visit_row(p, v) for p, v in rows) if rows else f"<p class='sub'>{T['none']}</p>",
                     unsafe_allow_html=True)
 
@@ -601,11 +545,11 @@ elif PG == "records":
     for pid, p in sorted(items, key=lambda x: x[1].get("created", ""), reverse=True):
         vs = p.get("visits", [])
         last = LEVEL_ICON[vs[-1]["level"]] if vs else "⚪"
-        with st.expander(f"{last}  {p['name']}   •   {p.get('age') or '-'}   •   {len(vs)} {T['visits']}"):
+        with st.expander(f"{last}  {p['name']}  •  {p.get('age') or '-'}  •  {len(vs)} {T['visits']}"):
             tags = "".join(f"<span class='tg'>{esc(x)}</span>" for x in [p.get("gender"), p.get("city"), p.get("phone"), p.get("blood")] if x)
             tags += "".join(f"<span class='tg r'>{T[k]}: {esc(p[f])}</span>" for k, f in [("alg", "allergy"), ("note", "chronic")] if p.get(f))
-            st.markdown(f"<div class='pc'><div class='av'>{esc(initials(p['name']))}</div><div><b style='font-size:20px'>{esc(p['name'])}</b><div class='tags'>{tags}</div></div></div>", unsafe_allow_html=True)
-            st.markdown("<hr style='margin:10px 0;border:0;border-top:1px solid #f1f5f9'>", unsafe_allow_html=True)
+            st.markdown(f"<div class='pc'><div class='av'>{esc(initials(p['name']))}</div><div><b style='font-size:18px'>{esc(p['name'])}</b><div class='tags'>{tags}</div></div></div>", unsafe_allow_html=True)
+            st.markdown("<hr style='margin:8px 0;border:0;border-top:1px solid #f1f5f9'>", unsafe_allow_html=True)
             st.markdown("".join(visit_row(p, v) for v in reversed(vs)) or f"<p class='sub'>{T['no_vis']}</p>", unsafe_allow_html=True)
             a, b, c = st.columns(3)
             a.button(T["again_p"], key=f"ag_{pid}", on_click=check_for, args=(pid,), use_container_width=True)
@@ -616,7 +560,7 @@ elif PG == "records":
             if c.button(T["del"], key=f"rm_{pid}", use_container_width=True):
                 db.pop(pid, None); save_db(db); st.rerun()
     if db:
-        st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
         buf = io.StringIO(); w = csv.writer(buf)
         w.writerow(["name", "age", "gender", "phone", "city", "blood", "allergy", "chronic", "when", "symptoms", "level", "title"])
         for p in db.values():
@@ -627,7 +571,7 @@ elif PG == "records":
 
 # ================================================================ PAGE: check
 else:
-    render_html(hero_html(), 255)
+    render_html(hero_html(), 240)
 
     def run_check(pid, age_, gender_, symptoms_, followup=None, record=True):
         try:
@@ -652,7 +596,7 @@ else:
             return False
 
     # ---- Step 1: Patient Profile
-    st.markdown(f"<div class='step-badge'>{T['step1']}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='step-wrap'><div class='step-badge'>{T['step1']}</div></div>", unsafe_allow_html=True)
     with st.container(border=True):
         ids = ["__new__"] + sorted(db, key=lambda i: db[i]["name"].lower())
         sel = st.selectbox(T["who"], ids, key="sel_pid", label_visibility="collapsed",
@@ -676,11 +620,11 @@ else:
             pdata = db[sel]
             tags = "".join(f"<span class='tg'>{esc(x)}</span>" for x in [pdata.get("gender"), pdata.get("city"), pdata.get("phone"), pdata.get("blood")] if x)
             tags += "".join(f"<span class='tg r'>{T[k]}: {esc(pdata[f])}</span>" for k, f in [("alg", "allergy"), ("note", "chronic")] if pdata.get(f))
-            st.markdown(f"<div class='pc'><div class='av'>{esc(initials(pdata['name']))}</div><div><b style='font-size:20px'>{esc(pdata['name'])}</b> "
+            st.markdown(f"<div class='pc'><div class='av'>{esc(initials(pdata['name']))}</div><div><b style='font-size:18px'>{esc(pdata['name'])}</b> "
                         f"• {esc(pdata.get('age') or '')}<div class='tags'>{tags}</div></div></div>", unsafe_allow_html=True)
 
     # ---- Step 2: Symptoms Input
-    st.markdown(f"<div class='step-badge'>{T['step2']}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='step-wrap'><div class='step-badge'>{T['step2']}</div></div>", unsafe_allow_html=True)
     with st.container(border=True):
         st.markdown(f"**{T['tap']}**")
         label_of = {q[0]: (q[1] if RTL else q[2]) for q in QUICK}
@@ -690,7 +634,7 @@ else:
             picked = st.multiselect(T["symp"], [q[0] for q in QUICK], format_func=lambda k: label_of[k], label_visibility="collapsed")
         picked = picked or []
 
-        col_voice, col_text = st.columns([1, 1.6])
+        col_voice, col_text = st.columns([1, 1.5])
         with col_voice:
             st.markdown(f"**{T['speak']}**")
             try:
@@ -710,7 +654,7 @@ else:
                         st.warning(T["no_hear"])
 
         with col_text:
-            typed = st.text_area(T["type"], key="typed", placeholder=T["type_ph"], height=120)
+            typed = st.text_area(T["type"], key="typed", placeholder=T["type_ph"], height=110)
 
         symptoms = " ".join([typed.strip()] + [QUICK_TEXT[p] for p in picked]).strip()
 
@@ -740,7 +684,7 @@ else:
 
     res = st.session_state.get("result")
     if res:
-        render_html(result_html(res), result_height(res) + 180)
+        render_html(result_html(res), result_height(res) + 160)
         if res.get("care"):
             render_html(care_html(res), care_height(res))
 
