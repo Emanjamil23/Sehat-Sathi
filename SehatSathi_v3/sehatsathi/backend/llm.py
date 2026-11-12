@@ -133,10 +133,17 @@ def status() -> dict:
     return out
  
  
+GEMINI_FALLBACKS = [
+    GEMINI_MODEL,
+    "gemini-3.1-flash-lite",
+    "gemini-flash-lite-latest",
+]
+
+
 def _call_gemini(system: str, user: str) -> str:
-    """Gemini REST call (sirf `requests`, naya package nahi). Free tier: aistudio.google.com"""
+    """Gemini REST call. 503/429 par agle model par chala jata hai."""
     import requests
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
+    import time
     body = {
         "system_instruction": {"parts": [{"text": system}]},
         "contents": [{"role": "user", "parts": [{"text": user}]}],
@@ -146,11 +153,30 @@ def _call_gemini(system: str, user: str) -> str:
             "responseMimeType": "application/json",
         },
     }
-    r = requests.post(url, json=body, timeout=40,
-                      headers={"x-goog-api-key": _gemini_key(), "Content-Type": "application/json"})
-    r.raise_for_status()
-    parts = r.json()["candidates"][0]["content"]["parts"]
-    return "".join(p.get("text", "") for p in parts)
+    last_err = None
+    tried = []
+    for model in GEMINI_FALLBACKS:
+        if model in tried:
+            continue
+        tried.append(model)
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+        for attempt in range(2):
+            try:
+                r = requests.post(url, json=body, timeout=25,
+                                  headers={"x-goog-api-key": _gemini_key(),
+                                           "Content-Type": "application/json"})
+                if r.status_code in (429, 500, 503, 504):
+                    last_err = requests.exceptions.HTTPError(
+                        f"{r.status_code} on {model}", response=r)
+                    time.sleep(1.5)
+                    continue
+                r.raise_for_status()
+                parts = r.json()["candidates"][0]["content"]["parts"]
+                return "".join(p.get("text", "") for p in parts)
+            except requests.exceptions.Timeout as e:
+                last_err = e
+                break
+    raise last_err
  
  
 SYSTEM = """You are a triage-support assistant for community health workers (Lady Health Workers) in rural Pakistan.
